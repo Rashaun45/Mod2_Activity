@@ -26,13 +26,13 @@ const employeedata = JSON.parse(text);
 
 const demo = document.getElementById("demo");
 
-// interation
+// iteration
 let workers = "";
 
 employeedata.employees.forEach(employee => {
     workers += `<li>${employee.firstName} ${employee.lastName}</li>`;
 });
-main.innerHTML = `<ul>${workers}</ul>`;
+demo.innerHTML = `<ul>${workers}</ul>`;
 
 
 </script>
