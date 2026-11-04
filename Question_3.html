@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    Module 2 - Assignment 2 - (Question 3)
+    Group members:
+    - Sherona Findley
+    - Romain Stoddart
+    - Rashaun Lennox
+    - Brittany Small 
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Employee Records</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+  <link rel="stylesheet" href="styles/question3.css">
+</head>
+<body>
+  <h1>Employee Records</h1>
+
+  <p>
+    <label for="statusFilter">Filter by status</label>
+    <select id="statusFilter" name="statusFilter">
+      <option value="">All statuses</option>
+      <option value="Active">Active</option>
+      <option value="Probation">Probation</option>
+      <option value="On Leave">On Leave</option>
+      <option value="Inactive">Inactive</option>
+    </select>
+  </p>
+
+  <p id="message" role="status"></p>
+
+  <table id="employeeTable" class="display" style="width:100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Position</th>
+        <th>Office</th>
+        <th>Start date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+  </table>
+
+  <!-- Load order: jQuery, then the plugin, then our own script -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+  <script src="js/question3.js"></script>
+</body>
+</html>
