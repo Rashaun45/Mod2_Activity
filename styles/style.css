@@ -85,6 +85,20 @@ select { width: 190px; height: 24px; font-size: 0.75rem; }
     align-items: center;
 }
 
+/* blurred card fields (PayPal selected) */
+.card.blurred { filter: blur(3px); opacity: 0.6; pointer-events: none; user-select: none; }
+
+/* extra shipping fields ('Same as billing' unchecked) */
+.ship {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    column-gap: 20px;
+    row-gap: 12px;
+    align-items: center;
+}
+.ship[style*="display: none"] { display: none; }
+
 /* error messages */
 label.error { display: block; grid-column: 2; text-align: left; text-transform: none; letter-spacing: 0; color: #c0392b; font-size: 0.8rem; margin-top: 2px; }
 input.error, select.error { border: 1px solid #c0392b; }

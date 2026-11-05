@@ -47,6 +47,35 @@
                     <option value="UK">United Kingdom</option>
                 </select>
                  
+                 <span></span>
+                 <label class="opt"><input type="checkbox" id="sameAsBilling" name="sameAsBilling" checked> Shipping same as billing</label>
+
+                 <div class="ship" id="shippingFields" style="display:none;">
+                     <label for="shipName">Name</label>
+                     <input type="text" id="shipName" name="shipName">
+
+                     <label for="shipAddress">Address</label>
+                     <input type="text" id="shipAddress" name="shipAddress">
+
+                     <label for="shipCity">City</label>
+                     <input type="text" id="shipCity" name="shipCity">
+
+                     <label for="shipState">State/Province</label>
+                     <input type="text" id="shipState" name="shipState">
+
+                     <label for="shipZip">Postal Code</label>
+                     <input type="text" id="shipZip" name="shipZip">
+
+                     <label for="shipCountry">Country</label>
+                     <select id="shipCountry" name="shipCountry">
+                         <option value="">Select a country</option>
+                         <option value="JA">Jamaica</option>
+                         <option value="US">United States</option>
+                         <option value="CA">Canada</option>
+                         <option value="UK">United Kingdom</option>
+                     </select>
+                 </div>
+
                  <span class="lbl">Payment<br>Method</span>
                  <span class="opts">
                         <label class="opt"><input type="radio" id="PayPal" name="paymentmethod" value="PayPal"> PayPal</label>
@@ -56,10 +85,10 @@
  
                     <div class="card">
                         <label for="cardNumber">Card Number</label>
-                        <input type="text" id="cardNumber" name="cardNumber" disabled>
+                        <input type="text" id="cardNumber" name="cardNumber">
  
                         <label for="expDate">Expiration Date</label>
-                        <input type="text" id="expDate" name="expDate" disabled>
+                        <input type="text" id="expDate" name="expDate">
                     </div>
 
                 <span></span>
@@ -78,6 +107,33 @@
             return this.optional(element) || filter.test(value);
         }, 'Please enter a valid email address.');
 
+        // PayPal selected -> blur out and disable the Card Information fields
+        function updateCardFields() {
+            const isPayPal = $('input[name="paymentmethod"]:checked').val() === 'PayPal';
+            const $card = $('.card');
+            $card.toggleClass('blurred', isPayPal);
+            $card.find('input').prop('disabled', isPayPal);
+            if (isPayPal) {
+                $card.find('input').val('').removeClass('error');
+                $card.find('label.error').hide();
+            }
+        }
+        $('input[name="paymentmethod"]').on('change', updateCardFields);
+
+        // 'Same as billing' unchecked -> show the extra shipping fields
+        function updateShipping() {
+            const same = $('#sameAsBilling').is(':checked');
+            $('#shippingFields').toggle(!same);
+            if (same) {
+                $('#shippingFields').find('input, select').removeClass('error');
+                $('#shippingFields label.error').hide();
+            }
+        }
+        $('#sameAsBilling').on('change', updateShipping);
+
+        updateCardFields();
+        updateShipping();
+
         $('#form').validate({
             rules: {
                 name: 'required',
@@ -89,7 +145,14 @@
                 country: 'required',
                 paymentmethod: 'required',
                 cardNumber: 'required',
-                expDate: 'required'
+                expDate: 'required',
+                // shipping fields are only validated while visible (jQuery Validate skips hidden fields)
+                shipName: 'required',
+                shipAddress: 'required',
+                shipCity: 'required',
+                shipState: 'required',
+                shipZip: 'required',
+                shipCountry: 'required'
             },
             messages: {
                 name: 'Please enter your name.',
@@ -101,7 +164,13 @@
                 country: 'Please select a country.',
                 paymentmethod: 'Please select a payment method.',
                 cardNumber: 'Please enter your card number.',
-                expDate: 'Please enter the expiration date.'
+                expDate: 'Please enter the expiration date.',
+                shipName: 'Please enter the shipping name.',
+                shipAddress: 'Please enter the shipping address.',
+                shipCity: 'Please enter the shipping city.',
+                shipState: 'Please enter the shipping state or province.',
+                shipZip: 'Please enter the shipping postal code.',
+                shipCountry: 'Please select the shipping country.'
             },
             errorPlacement: function (error, element) {
                 if (element.is(':radio')) {
